@@ -15,7 +15,7 @@ class Complement
   private
 
   def self.transcribe(strand, strand_hash)
-    strand.gsub!(/\S/) { |m| strand_hash[m] }
+    strand.gsub!(/\S/, strand_hash)
   end
 
 end
