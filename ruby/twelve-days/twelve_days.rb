@@ -31,32 +31,30 @@ class TwelveDays
   end
 
   def self.verse_for(day)
-    case day
-    when 12
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n"
-    when 11
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 10
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 9
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 8
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 7
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 6
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 5
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 4
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 3
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
-    when 2
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, two Turtle Doves, and a Partridge in a Pear Tree." + "\n\n"
+    verse = "On the #{day.to_ordinal} day of Christmas my true love gave to me, #{gifts_for(day)}."
+    if day == 12
+      verse << "\n"
     else
-      "On the #{day.to_ordinal} day of Christmas my true love gave to me, a Partridge in a Pear Tree." + "\n\n"
+      verse << "\n\n"
     end
+  end
+
+  def self.gifts_for(day)
+    gifts = [
+      "twelve Drummers Drumming",
+      "eleven Pipers Piping",
+      "ten Lords-a-Leaping",
+      "nine Ladies Dancing",
+      "eight Maids-a-Milking",
+      "seven Swans-a-Swimming",
+      "six Geese-a-Laying",
+      "five Gold Rings",
+      "four Calling Birds",
+      "three French Hens",
+      "two Turtle Doves"
+    ].last(day - 1).join(", ")
+    gifts << ", and " unless day == 1
+    gifts << "a Partridge in a Pear Tree"
   end
 end
 
