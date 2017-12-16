@@ -35,13 +35,36 @@ module TwelveDaysVerseFactory
   end
 end
 
+class Gifts
+  DATA = [
+    "twelve Drummers Drumming",
+    "eleven Pipers Piping",
+    "ten Lords-a-Leaping",
+    "nine Ladies Dancing",
+    "eight Maids-a-Milking",
+    "seven Swans-a-Swimming",
+    "six Geese-a-Laying",
+    "five Gold Rings",
+    "four Calling Birds",
+    "three French Hens",
+    "two Turtle Doves"
+  ]
+
+  def self.for(day)
+    gifts = DATA.last(day - 1).join(", ")
+    gifts << ", and " unless day == 1
+    gifts << "a Partridge in a Pear Tree"
+  end
+end
+
 class TwelveDaysVerse
   using Ordinality
 
-  attr_reader :day
+  attr_reader :day, :gifts
 
-  def initialize(day)
+  def initialize(day, gifts = Gifts)
     @day = day
+    @gifts = gifts
   end
 
   def to_s
@@ -51,25 +74,7 @@ class TwelveDaysVerse
   protected
 
   def verse
-    "On the #{day.to_ordinal} day of Christmas my true love gave to me, #{gifts_for(day)}."
-  end
-
-  def gifts_for(day)
-    gifts = [
-      "twelve Drummers Drumming",
-      "eleven Pipers Piping",
-      "ten Lords-a-Leaping",
-      "nine Ladies Dancing",
-      "eight Maids-a-Milking",
-      "seven Swans-a-Swimming",
-      "six Geese-a-Laying",
-      "five Gold Rings",
-      "four Calling Birds",
-      "three French Hens",
-      "two Turtle Doves"
-    ].last(day - 1).join(", ")
-    gifts << ", and " unless day == 1
-    gifts << "a Partridge in a Pear Tree"
+    "On the #{day.to_ordinal} day of Christmas my true love gave to me, #{gifts.for(day)}."
   end
 end
 
