@@ -23,23 +23,38 @@ module Ordinality
   end
 end
 
-class TwelveDays
-  using Ordinality
-
-  def self.song
-    1.upto(12).reduce("") { |song, day| song += verse_for(day) }
-  end
-
-  def self.verse_for(day)
-    verse = "On the #{day.to_ordinal} day of Christmas my true love gave to me, #{gifts_for(day)}."
-    if day == 12
-      verse << "\n"
-    else
-      verse << "\n\n"
+module TwelveDaysVerseFactory
+  refine Numeric do
+    def to_twelve_days_verse
+      begin
+        Object.const_get("TwelveDaysVerse#{self}")
+      rescue
+        TwelveDaysVerse
+      end.new(self)
     end
   end
+end
 
-  def self.gifts_for(day)
+class TwelveDaysVerse
+  using Ordinality
+
+  attr_reader :day
+
+  def initialize(day)
+    @day = day
+  end
+
+  def to_s
+    verse << "\n\n"
+  end
+
+  protected
+
+  def verse
+    "On the #{day.to_ordinal} day of Christmas my true love gave to me, #{gifts_for(day)}."
+  end
+
+  def gifts_for(day)
     gifts = [
       "twelve Drummers Drumming",
       "eleven Pipers Piping",
@@ -55,6 +70,20 @@ class TwelveDays
     ].last(day - 1).join(", ")
     gifts << ", and " unless day == 1
     gifts << "a Partridge in a Pear Tree"
+  end
+end
+
+class TwelveDaysVerse12 < TwelveDaysVerse
+  def to_s
+    verse << "\n"
+  end
+end
+
+class TwelveDays
+  using TwelveDaysVerseFactory
+
+  def self.song
+    1.upto(12).reduce("") { |song, day| song += day.to_twelve_days_verse.to_s }
   end
 end
 
