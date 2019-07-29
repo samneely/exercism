@@ -15,12 +15,12 @@ class WordProblem
       .gsub(/divided by/, "/")
       .gsub(/raised to the/, "**")
       .gsub(/th power/, "") # what about 3rd power?
-      .gsub(/\?/, "")
+      .delete("?")
       .split(" ")
 
     calculation_result = calculation_segments.shift.to_i
     calculation_segments.each_slice(2) do |(operator, next_number)|
-      calculation_result = calculation_result.send(operator, next_number.to_i)
+      calculation_result = calculation_result.public_send(operator, next_number.to_i)
     end
     calculation_result
   end
